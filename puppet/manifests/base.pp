@@ -59,7 +59,7 @@ exec { "install coffeescript":
   require => Exec['install npm deps']
 }
 ->
-service { 'polli':
+service { 'mibserver':
   ensure => running,
   enable => true,
   subscribe => [
