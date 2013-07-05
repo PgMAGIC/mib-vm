@@ -1,3 +1,4 @@
+notice("Set server ip to: $theserverip")
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
 # setup apt module
@@ -51,6 +52,12 @@ file{"/etc/init/mibserver.conf":
   source => "/tmp/vagrant-puppet/templates/mibserver.upstart.conf",
 }
 
+file{"/etc/profile.d/envsetup.sh":
+  content => "
+export SERVER_IP=${theserverip}
+",
+  replace => true
+}
 
 
 exec { "install coffeescript":

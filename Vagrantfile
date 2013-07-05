@@ -1,11 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+
+hostIP = "192.168.100.40"
+
 Vagrant::configure('2') do |config|
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 	v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
 end
+
+
 
 Vagrant::Config.run do |config|
 
@@ -24,7 +29,7 @@ Vagrant::Config.run do |config|
 
   # config.vm.network :bridged
   config.vm.forward_port 9001,9001
-  config.vm.provision :shell, :inline => "/etc/init.d/networking restart"
+  # config.vm.provision :shell, :inline => "/etc/init.d/networking restart"
 
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
@@ -39,6 +44,9 @@ Vagrant::Config.run do |config|
     puppet.module_path = "puppet/modules"
     puppet.options = ["--templatedir","/tmp/vagrant-puppet/templates"]
     puppet.manifest_file  = "base.pp"
+
+    puppet.facter["theserverip"] = hostIP
+    
   end
 
 end
