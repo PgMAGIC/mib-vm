@@ -49,7 +49,8 @@ file{"/etc/init/mibserver.conf":
   owner => "root",
   group => "root",
   mode  => 770,
-  source => "/tmp/vagrant-puppet/templates/mibserver.upstart.conf",
+  content => template("/tmp/vagrant-puppet/templates/mibserver.upstart.conf.erb"),
+  replace => true,
 }
 
 file{"/etc/profile.d/envsetup.sh":
